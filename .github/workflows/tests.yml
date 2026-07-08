@@ -1,0 +1,44 @@
+name: Playwright Tests with AutoHeal
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browsers
+        run: playwright install --with-deps chromium
+
+      - name: Run tests
+        id: tests
+        run: pytest --json-report --json-report-file=autoheal-results.json
+        continue-on-error: true
+
+      - name: Auto-heal on failure
+        if: steps.tests.outcome == 'failure'
+        uses: soumyaranjanmohanty2003/Master_Tool_Healing@main
+        with:
+          results-file: autoheal-results.json
+          groq-api-key: ${{ secrets.GROQ_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fail job if tests failed
+        if: steps.tests.outcome == 'failure'
+        run: exit 1
