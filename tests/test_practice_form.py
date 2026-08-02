@@ -33,7 +33,7 @@ def test_practice_form_submission(practice_form_page):
     practice_form_page.select_state_and_city(student["state"], student["city"])
     practice_form_page.submit()
 
-    assert practice_form_page.get_modal_title() == "Thank you for submitting the form"
+    assert practice_form_page.get_modal_title() == "Thank submitting the form"
 
     modal_data = practice_form_page.get_modal_data()
     full_name = f"{student['first_name']} {student['last_name']}"
