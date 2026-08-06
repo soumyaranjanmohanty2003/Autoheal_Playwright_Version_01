@@ -26,11 +26,9 @@ def test_practice_form_submission(practice_form_page):
     practice_form_page.fill_current_address(student["address"])
     practice_form_page.select_state_and_city(student["state"], student["city"])
     practice_form_page.submit()
-
-
-    assert practice_form_page.get_modal_title() == "Thank for submitting the form"
-
-
+    
+    assert practice_form_page.get_modal_title() == "Thanks for submitting the form"
+    
     modal_data = practice_form_page.get_modal_data()
     full_name = f"{student['first_name']} {student['last_name']}"
     assert modal_data["Student Name"] == full_name
