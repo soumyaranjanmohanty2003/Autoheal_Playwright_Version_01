@@ -1,9 +1,3 @@
-"""
-Scenario: Submit the DemoQA Practice Form and verify the confirmation
-modal reflects the data that was entered.
-"""
-
-
 def test_practice_form_submission(practice_form_page):
     student = {
         "first_name": "Soumya",
@@ -33,7 +27,7 @@ def test_practice_form_submission(practice_form_page):
     practice_form_page.select_state_and_city(student["state"], student["city"])
     practice_form_page.submit()
 
-    assert practice_form_page.get_modal_title() == "Thank submitting the form"
+    assert practice_form_page.get_modal_title() == "Thanks for submitting the form"
 
     modal_data = practice_form_page.get_modal_data()
     full_name = f"{student['first_name']} {student['last_name']}"
