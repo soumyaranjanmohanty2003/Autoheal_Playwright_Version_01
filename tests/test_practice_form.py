@@ -22,13 +22,13 @@ def test_practice_form_submission(practice_form_page):
     practice_form_page.fill_mobile(student["mobile"])
     practice_form_page.set_date_of_birth(student["day"], student["month"], student["year"])
     practice_form_page.add_subject(student["subject"])
-    practice_form_page.select_hobbies(student["hobbie"])
+    practice_form_page.select_hobbies(student["hobbies"])
     practice_form_page.fill_current_address(student["address"])
     practice_form_page.select_state_and_city(student["state"], student["city"])
     practice_form_page.submit()
 
 
-    assert practice_form_page.get_modal_title() == "Than for submitting the form"
+    assert practice_form_page.get_modal_title() == "Thanks for submitting the form"
 
 
     modal_data = practice_form_page.get_modal_data()
